@@ -12,4 +12,6 @@ public interface ICustomerService {
     void saveAllEmployee(List<CustomerDTO> customerDTOList);
     void add(CustomerDTO customerDTO);
     Page<Customer>findAllByList(Pageable pageable);
+    Page<Customer> findAllByName(String nameCustomer, Pageable pageable);
+
 }

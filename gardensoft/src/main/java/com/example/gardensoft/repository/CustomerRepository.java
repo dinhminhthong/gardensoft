@@ -1,11 +1,15 @@
 package com.example.gardensoft.repository;
 
 import com.example.gardensoft.model.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Modifying
@@ -25,6 +29,8 @@ void addCustomer(@Param("code") String code,
                  @Param("bank")String bank,
                  @Param("customer_type_id")Integer id,
                  @Param("isDelete")boolean isDelete);
+    @Query (value = "select * from  customer where  name like concat('%',:nameCustomer,'%') and is_delete = 0", nativeQuery = true)
+    Page<Customer> findAllName (@Param("nameCustomer") String nameCustomer, Pageable pageable);
 
 
 }

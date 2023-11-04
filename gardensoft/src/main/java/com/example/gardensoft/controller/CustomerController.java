@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,10 +27,11 @@ public class CustomerController {
         List<Customer> customers = iCustomerService.findAll();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
+
     @GetMapping("/getList")
-    public ResponseEntity<?> getAllCustomerbyPage(@RequestParam(value = "page",defaultValue = "0")Integer page){
-        Page<Customer>customerPage=this.iCustomerService.findAllByList(PageRequest.of(page,10));
-        return new ResponseEntity<>(customerPage,HttpStatus.OK);
+    public ResponseEntity<?> getAllCustomerbyPage(@RequestParam(value = "page", defaultValue = "0") Integer page) {
+        Page<Customer> customerPage = this.iCustomerService.findAllByList(PageRequest.of(page, 10));
+        return new ResponseEntity<>(customerPage, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -46,5 +48,16 @@ public class CustomerController {
     public ResponseEntity<?> saveAll(@RequestBody List<CustomerDTO> customerDTOList) {
         iCustomerService.saveAllEmployee(customerDTOList);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchName (@RequestParam(value = "name", defaultValue = "") String nameCustomer,
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page){
+        Page<Customer> customers = iCustomerService.findAllByName(nameCustomer,PageRequest.of(page, 10));
+            if (customers.isEmpty()){
+                return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }else {
+                return  new ResponseEntity<>(customers,HttpStatus.OK);
+            }
     }
 }
