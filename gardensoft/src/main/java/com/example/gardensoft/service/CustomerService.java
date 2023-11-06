@@ -30,7 +30,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void add(CustomerDTO customerDTO) {
-            customerRepository.addCustomer(customerDTO.getCode(),
+            customerRepository.addCustomer(
+                    customerDTO.getCode(),
                     customerDTO.getName(),
                      customerDTO.getAddress(),
                     customerDTO.getPhone(),
@@ -55,4 +56,22 @@ public class CustomerService implements ICustomerService {
     public Page<Customer> findAllByName(String nameCustomer, Pageable pageable) {
         return this.customerRepository.findAllName(nameCustomer, pageable);
     }
+
+    @Override
+    public Customer findById(Integer id) {
+        return customerRepository.findById(id).get();
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Customer customer =findById(id);
+        customer.setDelete(true);
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public Customer findTopByOrderByCodeDesc() {
+        return customerRepository.findTopByOrderByCodeDesc();
+    }
+
 }

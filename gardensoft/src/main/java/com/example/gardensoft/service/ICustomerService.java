@@ -13,5 +13,8 @@ public interface ICustomerService {
     void add(CustomerDTO customerDTO);
     Page<Customer>findAllByList(Pageable pageable);
     Page<Customer> findAllByName(String nameCustomer, Pageable pageable);
+    Customer findById(Integer id);
+    void delete (Integer id);
+    Customer findTopByOrderByCodeDesc();
 
 }

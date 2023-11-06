@@ -54,10 +54,10 @@ public class CustomerController {
     public ResponseEntity<?> searchName (@RequestParam(value = "name", defaultValue = "") String nameCustomer,
                                          @RequestParam(value = "page", defaultValue = "0") Integer page){
         Page<Customer> customers = iCustomerService.findAllByName(nameCustomer,PageRequest.of(page, 10));
-            if (customers.isEmpty()){
-                return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }else {
                 return  new ResponseEntity<>(customers,HttpStatus.OK);
-            }
+    }
+    @DeleteMapping("/remove/{id}")
+    public void  deleteCus (@PathVariable Integer id){
+        iCustomerService.delete(id);
     }
 }

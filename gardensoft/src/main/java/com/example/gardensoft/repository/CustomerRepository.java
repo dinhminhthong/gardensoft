@@ -31,6 +31,7 @@ void addCustomer(@Param("code") String code,
                  @Param("isDelete")boolean isDelete);
     @Query (value = "select * from  customer where  name like concat('%',:nameCustomer,'%') and is_delete = 0", nativeQuery = true)
     Page<Customer> findAllName (@Param("nameCustomer") String nameCustomer, Pageable pageable);
+    Customer findTopByOrderByCodeDesc();
 
 
 }

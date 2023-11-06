@@ -9,8 +9,8 @@ import javax.validation.constraints.Pattern;
 
 public class CustomerDTO implements Validator {
     private Integer id;
-    @NotBlank(message = "không được bỏ trống")
-    @Pattern( regexp = "^DT\\d{3}$", message = "phải điền đúng theo kiểu dữ liệu")
+//    @NotBlank(message = "không được bỏ trống")
+//    @Pattern( regexp = "^DT\\d{3}$", message = "phải điền đúng theo kiểu dữ liệu")
     private String code;
     @NotBlank (message = "tên không được để trống")
     private String name;
